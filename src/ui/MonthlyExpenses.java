@@ -24,6 +24,10 @@ public class MonthlyExpenses {
             }
         }
 
+        public void additem(Item item) {
+            ListOfExpenses.add(item);
+        }
+
         public void setbudget(int budget) { this.budget = budget; }
         public void setdate(String date) { this.date = date; }
         public int getbudget() { return budget; }

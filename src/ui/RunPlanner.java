@@ -17,15 +17,19 @@ public class RunPlanner {
         String x = s.nextLine();
         List<Item> loe = me.getListOfExpenses();
         int Index = loe.size();
-        while (x == "Y" || x == "y" || x == "yes" || x == "Yes") {
+
+        while (x.equals("Y") || x.equals("y") || x.equals("yes") || x.equals("Yes")) {
             System.out.println("Please input the name then the price of this month's expenses.");
             String z = s.nextLine();
             int y = s.nextInt();
+            s.nextLine();
             Item m = new Item(z, y);
+            me.additem(m);
             System.out.println("Added " + z + "!");
-            System.out.println("Would that be all?");
+            System.out.println("Anything else?");
             x = s.nextLine();
         }
+
         if (me.getbudget() >= me.gettotalexpenses()){
             System.out.println("Still on budget!");
         } else {
