@@ -1,6 +1,6 @@
 package ui;
 
-public class MainClass {
+public class DummyClass {
     public static void main(String[] args) {
         FirstMethod();
         SecondMethod();
