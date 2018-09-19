@@ -10,8 +10,8 @@ public class MonthlyExpenses {
 
         // Create a MonthlyExpenses with a date and a budget
         public MonthlyExpenses(Date date, int budget) {
-            date = this.date;
-            budget = this.budget;
+            this.date = date;
+            this.budget = budget;
             ListOfExpenses = new LinkedList<>();
         }
 

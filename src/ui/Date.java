@@ -5,8 +5,8 @@ public class Date {
     private int Year;
 
     public Date (int Month, int Year) {
-        Month = this.Month;
-        Year = this.Year;
+        this.Month = Month;
+        this.Year = Year;
     }
 
     public int getYear() { return Year;}

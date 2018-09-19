@@ -8,17 +8,17 @@ public class Expenses {
     private String Person;
 
     public Expenses(String Person) {
-        Person = this.Person;
+        this.Person = Person;
         TotalExpenses = new LinkedList<>();
     }
 
     public void addmonth(MonthlyExpenses me) {
-        TotalExpenses.add(me);
+        TotalExpenses.add(0, me);
     }
 
     public String getPerson() {return Person;}
     public List getmonthlyexpenses() {return TotalExpenses;}
-    public MonthlyExpenses getmonthlyexpense(Date d) {
-        return TotalExpenses.get(0);
+    public MonthlyExpenses getmonthlyexpense(int n) {
+        return TotalExpenses.get(n);
     }
 }

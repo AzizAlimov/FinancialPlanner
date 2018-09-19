@@ -7,7 +7,7 @@ public class RunPlanner {
         Groceries();
     }
 
-    public static MonthlyExpenses Groceries(){
+    public static void Groceries(){
         System.out.println("Welcome to FinancialPlanner! Who is the user today?");
         Scanner s;
         s = new Scanner(System.in);
@@ -15,9 +15,10 @@ public class RunPlanner {
 
         Date n = new Date(9, 2018);
         MonthlyExpenses me = new MonthlyExpenses(n, 1200);
+        Expenses e = new Expenses(name);
+        e.addmonth(me);
         while (true) {
             Introduction(name);
-            Expenses e = new Expenses(name);
             String x = s.nextLine();
             if (x.equals("A") || x.equals("A)") || x.equals("A.")) {
                 while (x.equals("A")||x.equals("A)")||x.equals("A.")||x.equals("y") || x.equals("yes") || x.equals("Yes")) {
@@ -26,13 +27,13 @@ public class RunPlanner {
                     int y = s.nextInt();
                     s.nextLine();
                     Item m = new Item(z, y);
-                    me.additem(m);
+                    (e.getmonthlyexpense(0)).additem(m);
                     System.out.println("Added " + z + "!");
                     System.out.println("Add another expense?");
                     x = s.nextLine();
                 }
             } else if (x.equals("B") || x.equals("b") || x.equals("B.")) {
-                for (Item temp: me.getListOfExpenses()) {
+                for (Item temp: (e.getmonthlyexpense(0)).getListOfExpenses()) {
                     System.out.println(temp.getName() + ": " + temp.getPrice() + "$");
                 }
                 System.out.println("Total: " + me.gettotalexpenses() + "$");
@@ -42,6 +43,7 @@ public class RunPlanner {
                 s.nextLine();
                 Date n2 = n.nextMonth();
                 me = new MonthlyExpenses(n2, budget);
+                e.addmonth(me);
             }
             System.out.println("Anything else?");
             x = s.nextLine();
@@ -51,12 +53,11 @@ public class RunPlanner {
         }
 
 
-        if (me.getbudget() >= me.gettotalexpenses()){
+        if ((e.getmonthlyexpense(0)).getbudget() >= (e.getmonthlyexpense(0)).gettotalexpenses()){
             System.out.println("Still on budget!");
         } else {
             System.out.println("Over budget.");
         }
-        return me;
     }
 
     private static void Introduction(String n) {
