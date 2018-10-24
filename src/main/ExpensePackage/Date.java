@@ -12,6 +12,13 @@ public class Date {
         this.Year = Year;
     }
 
+    public Date (String Month, String Year) {
+        int i = Integer.parseInt(Month);
+        int i2 = Integer.parseInt(Year);
+        this.Month = i;
+        this.Year = i2;
+    }
+
     //  EFFECTS: Returns the year of a Date object
     public int getYear() { return Year;}
 

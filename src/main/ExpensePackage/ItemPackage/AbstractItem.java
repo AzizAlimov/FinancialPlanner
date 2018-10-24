@@ -1,16 +1,12 @@
-package main.ExpensePackage;
+package main.ExpensePackage.ItemPackage;
 
-public class Item {
+public abstract class AbstractItem {
+
     private String name;
     private int price;
+    private boolean recurring;
 
-    // REQUIRES: price is a positive number
-    // MODIFIES: this
-    // EFFECTS: makes a new Item with a name and a price
-    public Item(String name, int price) {setName(name); setPrice(price); }
-
-
-    // EFFECTS: returns the name of an Item
+    // EFFECTS: returns the name of an AbstractItem
     public String getName() {return name;}
 
     // EFFECTS: returns the price of an item
@@ -22,7 +18,9 @@ public class Item {
 
     // REQUIRES: price is a positive number
     // MODIFIES: this
-    // EFFECTS: sets the price of an Item
+    // EFFECTS: sets the price of an AbstractItem
     public void setPrice (int price) {this.price = price; }
 
+    abstract void overbudgetmsg();
+    abstract boolean isessential();
 }
