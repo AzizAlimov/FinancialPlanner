@@ -1,0 +1,7 @@
+me 100 false
+p 30 false
+/
+o 20 true
+tt 60 true
+/
+

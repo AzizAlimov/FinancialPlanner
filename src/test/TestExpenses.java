@@ -16,9 +16,9 @@ public class TestExpenses {
 //        d = new Date(11, 2018);
 //        m = new MonthlyExpenses(d, 2000);
 //        e.addmonth(m);
-//        assertEquals(e.getmonthlyexpensewdate(d).getTotalcategorybudgets(), 0);
+//        assertEquals(e.getmonthlyexpensewdate(d).getTotalCategoryBudgets(), 0);
 //        AbstractCategory c = new AbstractCategory("food", 2000);
-//        (e.getmonthlyexpensewdate(d)).addcategory(c);
+//        (e.getmonthlyexpensewdate(d)).addCategory(c);
 //        AbstractItem i = new AbstractItem("fish", 500);
 //        c.addItem(i);
 //        int x = e.getmonthlyexpense(0).gettotalexpenses();
@@ -31,9 +31,9 @@ public class TestExpenses {
 //        d = new Date(11, 2018);
 //        m = new MonthlyExpenses(d, 2000);
 //        e.addmonth(m);
-//        assertEquals(e.getmonthlyexpensewdate(d).getTotalcategorybudgets(), 0);
+//        assertEquals(e.getmonthlyexpensewdate(d).getTotalCategoryBudgets(), 0);
 //        AbstractCategory c = new AbstractCategory("food", 2000);
-//        (e.getmonthlyexpensewdate(d)).addcategory(c);
+//        (e.getmonthlyexpensewdate(d)).addCategory(c);
 //        AbstractItem i = new AbstractItem("fish", 500);
 //        c.addItem(i);
 //        int x = e.getmonthlyexpense(0).gettotalexpenses();
@@ -45,6 +45,6 @@ public class TestExpenses {
     @Test
     public void testSplitOnSpace(){
         e = new Expenses("");
-        e.splitOnSpace("");
+//        e.splitOnSpace("");
     }
 }

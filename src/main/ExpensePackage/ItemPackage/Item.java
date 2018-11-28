@@ -6,7 +6,7 @@ public interface Item {
 
     int getPrice();
     String getName();
-    void overbudgetmsg();
-    boolean isessential();
+    void overBudgetMsg();
+    boolean isEssential();
 
 }

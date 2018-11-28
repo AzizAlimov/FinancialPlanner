@@ -1,13 +1,18 @@
 package main.ExpensePackage;
 
+import main.ExpensePackage.Exceptions.InvalidDateException;
+import org.omg.CORBA.DynAnyPackage.Invalid;
+
 public class Date {
     private int Month;
     private int Year;
 
-    //  REQUIRES: Month is an integer between 0 and 12 and Year is a positive integer
     //  MODIFIES: this
     //  EFFECTS: Constructs a Date with a month and a year
-    public Date (int Month, int Year) {
+    public Date (int Month, int Year) throws InvalidDateException {
+        if (Month < 0 || Month > 12) {
+            throw new InvalidDateException();
+        }
         this.Month = Month;
         this.Year = Year;
     }
@@ -27,7 +32,7 @@ public class Date {
 
     // MODIFIES: this
     // EFFECTS: Constructs a Date in the next month as the given Date
-    public Date nextMonth() {
+    public Date nextMonth() throws InvalidDateException {
         if (Month == 12) {
             int temp = Year + 1;
             Date temp2 = new Date(0, temp);

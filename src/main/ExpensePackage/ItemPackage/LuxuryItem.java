@@ -3,17 +3,14 @@ package main.ExpensePackage.ItemPackage;
 import main.ExpensePackage.CategoryPackage.Category;
 
 public class LuxuryItem extends AbstractItem implements Item {
-    private String name;
-    private int price;
-    private Category category;
 
     public LuxuryItem(String name, int price) {
-        this.name = name;
-        this.price = price;
+        super(name, price);
     }
 
-    public void overbudgetmsg() {
+    public void overBudgetMsg() {
         System.out.println("Are you sure you need that?");
     }
-    public boolean isessential() { return false; }
+    public boolean isEssential() { return false; }
+
 }

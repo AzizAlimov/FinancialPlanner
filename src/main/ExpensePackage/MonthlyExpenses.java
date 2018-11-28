@@ -1,17 +1,17 @@
 package main.ExpensePackage;
 
 import main.ExpensePackage.CategoryPackage.Category;
+import main.ExpensePackage.Exceptions.OutOfMoneyException;
 import main.ExpensePackage.ItemPackage.Item;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class MonthlyExpenses {
     private Date date;
     private int totalcategorybudgets;
     private int budget;
     private int totalexpenses;
-    private List<Category> category;
+    private Map<Category, ArrayList<Item>> category;
     private Expenses e;
 
     // EFFECTS: Returns the date of a monthly expense
@@ -22,12 +22,10 @@ public class MonthlyExpenses {
     // MODIFIES: this
     // EFFECTS: Sets the expenses of a monthly expense
     public void setExpenses(Expenses e) {
-        this.e = e;
-    }
-
-    // EFFECTS: Returns the sum of the prices of all the items in a monthly expense
-    public int gettotalexpenses() {
-        return totalexpenses;
+        if(!(this.e).equals(e)) {
+            this.e = e;
+            e.addmonth(this);
+        }
     }
 
     // MODIFIES: this
@@ -35,7 +33,7 @@ public class MonthlyExpenses {
     public MonthlyExpenses(Date date, int budget) {
         this.date = date;
         this.budget = budget;
-        category = new LinkedList<>();
+        category = new HashMap<Category, ArrayList<Item>>();
     }
 
     //
@@ -43,33 +41,38 @@ public class MonthlyExpenses {
         Integer i = Integer.parseInt(budget);
         this.date = date;
         this.budget = i;
-        category = new LinkedList<>();
+        category = new HashMap<Category, ArrayList<Item>>();
     }
 
     // MODIFIES: this
     // EFFECTS: adds a category to the list of categories
-    public void addcategory(Category category) {
-        this.category.add(0, category);
+    public void addCategory(Category category) throws OutOfMoneyException {
+        this.category.put(category, null);
         totalcategorybudgets += category.getbudget();
         category.setMonthlyExpense(this);
+        if (budget<totalcategorybudgets) {
+            throw new OutOfMoneyException();
+        }
     }
 
-    public void addcategory(List<Category> category) {
+    public void addCategory(List<Category> category) {
         for (Category c: category) {
-            this.category.add(c);
+            this.category.put(c, null);
             totalcategorybudgets += c.getbudget();
+            e.addExpense(c.getbudget());
         }
     }
 
 
     // EFFECTS: returns the total expenses
-    public int getTotalcategorybudgets() {
+    public int getTotalCategoryBudgets() {
         return totalcategorybudgets;
     }
 
     // EFFECTS: prints the list of categories for a month
     public void printcategories() {
-        for (Category t : category) {
+        Set<Category> loi = category.keySet();
+        for (Category t : loi) {
             System.out.println(t.getName() + ": " + t.getbudget() + "$");
         }
     }
@@ -103,34 +106,15 @@ public class MonthlyExpenses {
         return date;
     }
 
-    // REQUIRES: the given integer to be an index of the list of categories
-    // MODIFIES: this
-    // EFFECTS: removes a category and updates the total expenses
-    public void removecategory(int category) {
-        totalcategorybudgets -= this.category.get(0).getbudget();
-        this.category.remove(category);
-    }
-
-    //
-    public void removecategory(String category) {
-        for (Category c: this.category) {
-            if (c.getName().equals(category)) {
-                this.category.remove(c);
-                break;
-            }
-        }
-    }
-
-
     // EFFECTS: returns a list of the categories of a month
-    public List<Category> getcategory() {
-        return category;
+    public Set<Category> getCategory() {
+        return category.keySet();
     }
 
     // REQUIRES: The given category is a part of the list of categories in a monthly expense
     // EFFECTS: Returns the category with a given name
-    public Category getcategory(String category) {
-        for (Category c : this.category) {
+    public Category getCategory(String category) {
+        for (Category c : this.category.keySet()) {
             if (category.equals(c.getName())) {
                 return c;
             }
@@ -138,20 +122,15 @@ public class MonthlyExpenses {
         throw new NoSuchFieldError("The category does not exist");
     }
 
-    //
-    public Category getcategory(int i) {
-        return category.get(i);
-    }
 
     // EFFECTS: Prints the categories of a monthly expense along with the expenses in each category
-    public void printexpenses() {
+    public void printExpenses() {
         int x = 0;
-        for (Category c: category) {
+        for (Category c: category.keySet()) {
             int y = 0;
             System.out.println(x + ": " + c.getName() + ", " + c.getbudget() + "$");
-            List<Item> i = c.getItems();
-            for (Item temp: i) {
-                System.out.println(y + ". " + temp.getName() + " : " + temp.getPrice() + "$");
+            for (Item i: c.getItems()) {
+                System.out.println(y + ". " + i.getName() + " : " + i.getPrice() + "$");
                 y++;
             }
             System.out.println("Remaining: " + (c.getbudget() - c.getexpenses()));
@@ -159,7 +138,62 @@ public class MonthlyExpenses {
         }
     }
 
-    public void removeitem(int ctg, int item) {
-        (category.get(ctg)).removeItem(item);
+    public void removeItem(Category ctg, Item i) {
+        ctg.removeItem(i);
+        category.remove(ctg, i);
+    }
+
+    public void removeItem(Item item) {
+        Set<Category> keys = category.keySet();
+        List<Category> loc = null;
+        for (Category k: keys) {
+            if (category.get(k).equals(item)) {
+                category.remove(k, item);
+            }
+        }
+    }
+
+    public Item getItem(Category ctg, int i) {
+        return category.get(ctg).get(i);
+    }
+
+    public Item getItem(String s) {
+        Set<Category> ks = category.keySet();
+        for (Category k: ks) {
+            ArrayList<Item> ll = category.get(k);
+            for (int n = 0; n<ll.size(); n++)
+            if (category.get(k).get(n).getName().equals(s)) {
+                return category.get(k).get(n);
+            }
+        }
+        return null;
+    }
+
+    public void adjustitems() {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Which luxury items would you like to remove?");
+        printcategories();
+        System.out.println("Category: ");
+        String a = s.nextLine();
+        Category c = getCategory(a);
+        System.out.println("Item: ");
+        String b = s.nextLine();
+        Item d = getItem(b);
+        removeItem(c, d);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MonthlyExpenses that = (MonthlyExpenses) o;
+        return Objects.equals(date, that.date) &&
+                Objects.equals(e, that.e);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(date, e);
     }
 }
