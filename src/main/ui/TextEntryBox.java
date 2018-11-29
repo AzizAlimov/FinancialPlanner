@@ -20,7 +20,7 @@ public class TextEntryBox extends JFrame {
     private JTextArea textArea;
     private JLabel status;
     private Reader r;
-
+    public JButton btn;
 
     public TextEntryBox() {
         super("FinancialPlanner");
@@ -59,7 +59,7 @@ public class TextEntryBox extends JFrame {
         panel.add(jLabel1);
 
 
-        JButton btn = new JButton("Enter");
+        btn = new JButton("Enter");
         btn.setActionCommand("myButton");
 
 
@@ -76,5 +76,11 @@ public class TextEntryBox extends JFrame {
                 entry.setText("");
             }
         });
+
+    }
+
+    public String getInput(){
+        String val = entry.getText().trim();
+        return val;
     }
 }

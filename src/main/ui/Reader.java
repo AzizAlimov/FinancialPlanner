@@ -1,16 +1,20 @@
 package main.ui;
 
 import javax.xml.soap.Text;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Reader {
 
     private static String read1;
+    private final TextEntryBox box;
 
-    public Reader () {
+    public Reader (TextEntryBox box) {
+        this.box = box;
     }
 
-    public static void read(String s) {
-        read1 = s;
+    public String read() {
+        return box.getInput();
     }
 
     public String readout() {
