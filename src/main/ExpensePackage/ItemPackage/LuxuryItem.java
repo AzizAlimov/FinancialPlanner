@@ -1,6 +1,7 @@
 package main.ExpensePackage.ItemPackage;
 
 import main.ExpensePackage.CategoryPackage.Category;
+import main.ui.Printer;
 
 public class LuxuryItem extends AbstractItem implements Item {
 
@@ -9,7 +10,7 @@ public class LuxuryItem extends AbstractItem implements Item {
     }
 
     public void overBudgetMsg() {
-        System.out.println("Are you sure you need that?");
+        Printer.print("Are you sure you need that?");
     }
     public boolean isEssential() { return false; }
 

@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TextEntryBox extends JFrame implements ActionListener {
+public class TextEntryBox extends JFrame {
 
     private JTextField entry;
     private JPanel panel;
     private JLabel jLabel1;
     private JTextArea textArea;
     private JLabel status;
+    private Reader r;
 
 
     public TextEntryBox() {
@@ -28,20 +29,8 @@ public class TextEntryBox extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent a) {
-        if (a.getActionCommand().equals("myButton")) {
-            textArea.setText(entry.getText());
-            entry.setText("");
-        }
-    }
-
-    public void changedUpdate(DocumentEvent d) {
-    }
-
-    public void insertUpdate(DocumentEvent d) {
-    }
-
-    public void removeUpdate(DocumentEvent d) {
+    public void setTextArea(String s) {
+        textArea.setText(s);
     }
 
     private void initComponents() {
@@ -79,6 +68,13 @@ public class TextEntryBox extends JFrame implements ActionListener {
         panel.add(btn);
 
         add(panel);
-        btn.addActionListener(this);
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText(entry.getText());
+                r.read(entry.getText());
+                entry.setText("");
+            }
+        });
     }
 }

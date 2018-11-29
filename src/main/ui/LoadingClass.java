@@ -67,11 +67,9 @@ public class LoadingClass {
                         ae.get(0).getmonthlyexpense(x).addCategory(c);
                     }
                 }
-
             } catch (OutOfMoneyException o) {
-                System.out.println("There was an error in loading your financial plan. The budget of category " +
+                Printer.print("There was an error in loading your financial plan. The budget of category " +
                         x + " was exceeded. Please remove an item to make space");
-
             }
         }
         // loads Items
@@ -96,14 +94,14 @@ public class LoadingClass {
                         ae.get(0).getmonthlyexpense(x).getCategory(partsOfLine.get(3)).addItem(i);
                     }
                 } catch (OutOfMoneyException o) {
-                    System.out.println("Something went wrong in loading your items. The categories they belonged to " +
+                    Printer.print("Something went wrong in loading your items. The categories they belonged to " +
                             "had their budgets exceeded. Which item would you like to remove?");
                     ae.get(0).getTotalExpenses().get(0).printcategories();
                     Scanner s = new Scanner(System.in);
-                    System.out.println("Category: ");
+                    Printer.print("Category: ");
                     String z = s.nextLine();
                     Category zc = ae.get(0).getmonthlyexpense(x).getCategory(z);
-                    System.out.println("Item:");
+                    Printer.print("Item:");
                     String q = s.nextLine();
                     Item yq = ae.get(0).getTotalExpenses().get(0).getItem(q);
                     ae.get(0).getTotalExpenses().get(0).removeItem(zc, yq);

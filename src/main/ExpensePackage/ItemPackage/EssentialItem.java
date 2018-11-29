@@ -1,6 +1,7 @@
 package main.ExpensePackage.ItemPackage;
 
 import main.ExpensePackage.CategoryPackage.Category;
+import main.ui.Printer;
 
 public class EssentialItem extends AbstractItem implements Item {
 
@@ -13,7 +14,7 @@ public class EssentialItem extends AbstractItem implements Item {
 
     @Override
     public void overBudgetMsg() {
-        System.out.println("Better make room! What luxury item would you like to remove?");
+        Printer.print("Better make room! What luxury item would you like to remove?");
     }
 
     @Override

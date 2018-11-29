@@ -1,5 +1,7 @@
 package main.ExpensePackage.CategoryPackage;
 
+import main.ui.Printer;
+
 import java.util.Scanner;
 
 public class EssentialCategory extends AbstractCategory{
@@ -19,7 +21,7 @@ public class EssentialCategory extends AbstractCategory{
 
     @Override
     public void overbudgetmsg() {
-        System.out.println("Overbudget! Better make room.");
+        Printer.print("Overbudget! Better make room.");
         MonthlyExpenses.adjustitems();
     }
 

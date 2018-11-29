@@ -8,6 +8,7 @@ import main.ExpensePackage.Exceptions.OutOfMoneyException;
 import main.ExpensePackage.ItemPackage.EssentialItem;
 import main.ExpensePackage.ItemPackage.Item;
 import main.ExpensePackage.ItemPackage.LuxuryItem;
+import main.ui.Printer;
 import main.ui.SavingClass;
 
 import java.io.*;
@@ -72,14 +73,14 @@ public class Expenses {
 
     // EFFECTS: Prints out the list of options that the user can do
     public void Options() {
-        System.out.println("What would you like to do now?");
-        System.out.println("A) Add an expense to this month.");
-        System.out.println("B) See this month's expenses.");
-        System.out.println("C) Plan for the next month.");
-        System.out.println("D) Change an existing plan.");
-        System.out.println("E) End Planner and save.");
-        System.out.println("F) End Planner without saving");
-        System.out.println("G) This month's rent");
+        Printer.print("What would you like to do now?");
+        Printer.print("A) Add an expense to this month.");
+        Printer.print("B) See this month's expenses.");
+        Printer.print("C) Plan for the next month.");
+        Printer.print("D) Change an existing plan.");
+        Printer.print("E) End Planner and save.");
+        Printer.print("F) End Planner without saving");
+        Printer.print("G) This month's rent");
     }
 
     // EFFECTS: Returns the monthly expense at a given index value
@@ -91,12 +92,12 @@ public class Expenses {
     // EFFECTS: sets up a monthly expense at a user inputted date
     public void setupdate(String name) throws InputMismatchException, InvalidDateException {
         Scanner s = new Scanner(System.in);
-        System.out.println("Hi " + name + "! Let's set up your financial plan.");
-        System.out.println("What date would you like to setup your financial plan for?");
-        System.out.println("Year: ");
+        Printer.print("Hi " + name + "! Let's set up your financial plan.");
+        Printer.print("What date would you like to setup your financial plan for?");
+        Printer.print("Year: ");
         int year = s.nextInt();
         s.nextLine();
-        System.out.println("Month (Please give the number of the month): ");
+        Printer.print("Month (Please give the number of the month): ");
         int month = s.nextInt();
         s.nextLine();
         Date firstdate = new Date(month, year);
@@ -113,21 +114,21 @@ public class Expenses {
     // EFFECTS: sets up a monthly expense at the user inputted date
     private void setup2(String name, Scanner s, Date firstdate) throws InputMismatchException {
 
-        System.out.println("What is your budget for " + firstdate.getMonth() +
+        Printer.print("What is your budget for " + firstdate.getMonth() +
                 " " + firstdate.getYear() + "?");
         int budget = s.nextInt();
         s.nextLine();
         MonthlyExpenses me = new MonthlyExpenses(firstdate, budget);
         addmonth(me);
-        System.out.println("What categories would you like to add to this month?");
+        Printer.print("What categories would you like to add to this month?");
         while (me.getbudget() > me.getTotalCategoryBudgets()) {
             try {
-                System.out.println("Name: ");
+                Printer.print("Name: ");
                 name = s.nextLine();
-                System.out.println("Budget: ");
+                Printer.print("Budget: ");
                 budget = s.nextInt();
                 s.nextLine();
-                System.out.println("Is this category essential?");
+                Printer.print("Is this category essential?");
                 String ec = s.nextLine();
                 if (ec.equals("yes")) {
                     Category c = new EssentialCategory(name, budget);
@@ -137,9 +138,9 @@ public class Expenses {
                     me.addCategory(c);
                 }
             } catch (OutOfMoneyException ne) {
-                System.out.println("Exceeded monthly budget. Please try again while staying within the budget.");
+                Printer.print("Exceeded monthly budget. Please try again while staying within the budget.");
             }
-            System.out.println("Remaining total budget: " + (me.getbudget() - me.getTotalCategoryBudgets()) + "$");
+            Printer.print("Remaining total budget: " + (me.getbudget() - me.getTotalCategoryBudgets()) + "$");
         }
     }
 
@@ -153,23 +154,23 @@ public class Expenses {
             if (x.equals("A") || x.equals("A)") || x.equals("A.") || x.equals("a")) {
                 while (x.equals("A") || x.equals("A)") || x.equals("A.") || x.equals("y")
                         || x.equals("yes") || x.equals("Yes")) {
-                    System.out.println("What category does your expense belong to?");
+                    Printer.print("What category does your expense belong to?");
                     (getmonthlyexpense(0)).printcategories();
                     String z = s.nextLine();
 
                     Category c = getmonthlyexpense(0).getCategory(z);
                     try {
                     if (!c.isEssentialCategory()) {
-                        System.out.println("Please input the name followed by the price of your expense.");
+                        Printer.print("Please input the name followed by the price of your expense.");
                         z = s.nextLine();
                         int y = s.nextInt();
                         s.nextLine();
                         Item m = new LuxuryItem(z, y);
                         c.addItem(m);
                     } else {
-                            System.out.println("Is your item essential?.");
+                            Printer.print("Is your item essential?.");
                             z = s.nextLine();
-                            System.out.println("Please input the name followed by the price of your item.");
+                            Printer.print("Please input the name followed by the price of your item.");
                             String o = s.nextLine();
                             int y = s.nextInt();
                             s.nextLine();
@@ -181,12 +182,12 @@ public class Expenses {
                                 c.addItem(m);
                             }
                         }
-                        System.out.println("Added " + z + "! " + (c.getbudget() - c.getexpenses()) +
+                        Printer.print("Added " + z + "! " + (c.getbudget() - c.getexpenses()) +
                                 "$ is remaining in the " + c.getName() + " category.");
                     } catch (OutOfMoneyException m) {
-                        System.out.println("There is not enough money in the category to add this item.");
+                        Printer.print("There is not enough money in the category to add this item.");
                     } finally {
-                        System.out.println("Add another expense?");
+                        Printer.print("Add another expense?");
                         x = s.nextLine();
                     }
                 }
@@ -196,7 +197,7 @@ public class Expenses {
                 try {
                     setupnextmonth(name, s, getmonthlyexpense(0).getdate());
                 } catch (InvalidDateException i) {
-                    System.out.println("Something went wrong with setting up the next month." +
+                    Printer.print("Something went wrong with setting up the next month." +
                             " There was an error with the date");
                 }
             } else if (x.equals("D") || x.equals("d") || x.equals("D)") || x.equals("D.")) {
@@ -206,10 +207,10 @@ public class Expenses {
                     SavingClass sc = new SavingClass(this);
                     sc.save();
                 } catch (FileNotFoundException f) {
-                    System.out.println("Something went wrong in saving. Your files were either deleted or renamed." +
+                    Printer.print("Something went wrong in saving. Your files were either deleted or renamed." +
                             " FinancialPlanner will now close.");
                 } catch (UnsupportedEncodingException u) {
-                    System.out.println("The specific encoding was not supported. FinancialPlanner will now close.");
+                    Printer.print("The specific encoding was not supported. FinancialPlanner will now close.");
                 } finally {
                     System.exit(0);
                 }
@@ -232,11 +233,11 @@ public class Expenses {
                         sb.append(System.lineSeparator());
                     }
 
-                    System.out.println(sb);
+//                    Printer.print(sb);
                 } catch (MalformedURLException m) {
-                    System.out.println("Something went wrong");
+                    Printer.print("Something went wrong");
                 } catch (IOException i) {
-                    System.out.println("Something went wrong");
+                    Printer.print("Something went wrong");
             }finally {
                     try {
                         if (br != null) {
@@ -246,7 +247,7 @@ public class Expenses {
                     }
                 }
             }
-            System.out.println("Anything else?");
+            Printer.print("Anything else?");
             x = s.nextLine();
             if (x.equals("N") || x.equals("n") || x.equals("No") || x.equals("no")) {
                 try {

@@ -2,6 +2,7 @@ package main.ExpensePackage.CategoryPackage;
 import main.ExpensePackage.Exceptions.OutOfMoneyException;
 import main.ExpensePackage.ItemPackage.Item;
 import main.ExpensePackage.MonthlyExpenses;
+import main.ui.Printer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public abstract class AbstractCategory implements Category{
 
     public void printitems () {
         for (Item key: loi) {
-            System.out.println(key.getName() + ": " + key.getPrice() + "$");
+            Printer.print(key.getName() + ": " + key.getPrice() + "$");
         }
     }
 

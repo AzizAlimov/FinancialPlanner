@@ -20,18 +20,13 @@ import java.util.Scanner;
 
 public class RunPlanner {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-                                       public void run() {
-                                           //Turn off metal's use of bold fonts
-                                           UIManager.put("swing.boldMetal", Boolean.FALSE);
-                                           new TextEntryBox().setVisible(true);
-                                       }
-                                   } );
-        System.out.println("Welcome to FinancialPlanner! Are you a new user or an existing user?");
-        Scanner s = new Scanner(System.in);
-        String a = s.nextLine();
-        System.out.println("What is your name?");
-        String name = s.nextLine();
+        TextEntryBox textentrybox = new TextEntryBox();
+        Printer printer = new Printer(textentrybox);
+        Printer.print("Welcome to FinancialPlanner! Are you a new user or an existing user?");
+        Reader r = new Reader();
+        String a = r.readout();
+        Printer.print("What is your name?");
+        String name = r.readout();
         Expenses e = new Expenses(name);
         try {
             if (a.equals("new")) {
@@ -48,16 +43,16 @@ public class RunPlanner {
                 }
             }
             if ((e.getmonthlyexpense(0)).getbudget() >= (e.getmonthlyexpense(0)).getTotalCategoryBudgets()) {
-                System.out.println("Still on budget! " +
+                Printer.print("Still on budget! " +
                         (BudgetExpenseDifference(e)) +
                         " is remaining.");
             } else {
-                System.out.println("Over budget by " + (-BudgetExpenseDifference(e)));
+                Printer.print("Over budget by " + (-BudgetExpenseDifference(e)));
             }
         } catch (InputMismatchException i) {
-            System.out.println("You have given an invalid input. FinancialPlanner will now terminate.");
+            Printer.print("You have given an invalid input. FinancialPlanner will now terminate.");
         } catch (InvalidDateException i) {
-            System.out.println("You have given an invalid date.");
+            Printer.print("You have given an invalid date.");
         } catch (IOException n) {
 
         }

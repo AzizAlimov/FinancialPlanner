@@ -3,6 +3,7 @@ package main.ExpensePackage;
 import main.ExpensePackage.CategoryPackage.Category;
 import main.ExpensePackage.Exceptions.OutOfMoneyException;
 import main.ExpensePackage.ItemPackage.Item;
+import main.ui.Printer;
 
 import java.util.*;
 
@@ -73,7 +74,7 @@ public class MonthlyExpenses {
     public void printcategories() {
         Set<Category> loi = category.keySet();
         for (Category t : loi) {
-            System.out.println(t.getName() + ": " + t.getbudget() + "$");
+            Printer.print(t.getName() + ": " + t.getbudget() + "$");
         }
     }
 
@@ -128,12 +129,12 @@ public class MonthlyExpenses {
         int x = 0;
         for (Category c: category.keySet()) {
             int y = 0;
-            System.out.println(x + ": " + c.getName() + ", " + c.getbudget() + "$");
+            Printer.print(x + ": " + c.getName() + ", " + c.getbudget() + "$");
             for (Item i: c.getItems()) {
-                System.out.println(y + ". " + i.getName() + " : " + i.getPrice() + "$");
+                Printer.print(y + ". " + i.getName() + " : " + i.getPrice() + "$");
                 y++;
             }
-            System.out.println("Remaining: " + (c.getbudget() - c.getexpenses()));
+            Printer.print("Remaining: " + (c.getbudget() - c.getexpenses()));
             x++;
         }
     }
@@ -173,10 +174,10 @@ public class MonthlyExpenses {
         Scanner s = new Scanner(System.in);
         System.out.print("Which luxury items would you like to remove?");
         printcategories();
-        System.out.println("Category: ");
+        Printer.print("Category: ");
         String a = s.nextLine();
         Category c = getCategory(a);
-        System.out.println("Item: ");
+        Printer.print("Item: ");
         String b = s.nextLine();
         Item d = getItem(b);
         removeItem(c, d);
