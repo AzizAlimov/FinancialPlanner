@@ -72,7 +72,7 @@ public class TextEntryBox extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.setText(entry.getText());
-                r.read(entry.getText());
+//                r.read(entry.getText());
                 entry.setText("");
             }
         });
